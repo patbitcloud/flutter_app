@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/components/button.dart';
-import 'package:flutter_app/components/coffee_tile.dart';
 import 'package:flutter_app/theme/colors.dart';
 import 'package:flutter_app/models/coffee.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../components/coffee_tile.dart';
+import 'dart:ui';
 
 class MenuPage extends StatefulWidget {
   const MenuPage({super.key});
@@ -92,7 +93,7 @@ class _MenuPageState extends State<MenuPage> {
 
           // search bar
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25.0),
+            padding: const EdgeInsets.all(25.0),
             child: TextField(
               decoration: InputDecoration(
                 hintText: 'Search for coffee...',
@@ -115,7 +116,7 @@ class _MenuPageState extends State<MenuPage> {
 
           // menu items
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25.0),
+            padding: const EdgeInsets.all(25.0),
             child: Text(
               'Coffee Menu',
               style: GoogleFonts.lato(
@@ -128,22 +129,79 @@ class _MenuPageState extends State<MenuPage> {
 
           const SizedBox(height: 10),
 
-          Expanded(
-            child: ListView.builder(
-              itemCount: menuItems.length,
-              itemBuilder: (context, index) {
-                final coffee = menuItems[index];
-                return CoffeeTile(
-                  name: coffee.formattedName,
-                  price: coffee.price,
-                  imagePath: coffee.formattedImagePath,
-                  rating: coffee.formattedRating,
-                );
+          ScrollConfiguration(
+            behavior: ScrollConfiguration.of(context).copyWith(
+            dragDevices: {
+                PointerDeviceKind.touch,
+                PointerDeviceKind.mouse,
               },
+            ),
+            child: Expanded(
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: menuItems.length,
+                itemBuilder: (context, index) => SizedBox(
+                  child: CoffeeTile(coffee: menuItems[index]),
+                ),
+              ),
             ),
           ),
 
+          const SizedBox(height: 10),
+
           // popular items
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(20),
+            ),
+            margin: const EdgeInsets.only(left: 25, right: 25, bottom: 25),
+            padding: const EdgeInsets.all(20),
+            child: Row(
+              children: [
+                Row(
+                  children: [
+                    Image.asset(
+                      'lib/images/latte_macchiato.png',
+                      height: 100,
+                    ),
+
+                    const SizedBox(width: 10),
+
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Latte Macchiato',
+                          style: GoogleFonts.lato(
+                            fontSize: 20,
+                            color: Colors.black87,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+
+                        const SizedBox(height: 10),
+
+                        Text(
+                          '\$4.99',
+                          style: GoogleFonts.lato(
+                            fontSize: 16,
+                            color: Colors.grey[600],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+
+                const Icon(
+                  Icons.favorite_outline, 
+                  color: Colors.red,
+                  size: 28
+                  ),
+              ],
+            ),
+          ),
         ],
       ),
     );
