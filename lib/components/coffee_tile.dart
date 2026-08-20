@@ -14,10 +14,11 @@ class CoffeeTile extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
       ),
-      margin: const EdgeInsets.only(left: 25, right: 25, bottom: 25),
+      margin: const EdgeInsets.only(left: 25, right: 25, bottom: 15),
       padding: const EdgeInsets.all(25),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Image.asset(
             coffee.imagePath,
