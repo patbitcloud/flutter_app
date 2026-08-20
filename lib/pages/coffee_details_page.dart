@@ -1,0 +1,202 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_app/components/button.dart';
+import 'package:flutter_app/theme/colors.dart';
+import 'package:google_fonts/google_fonts.dart';
+import '../models/coffee.dart';
+
+class CoffeeDetailsPage extends StatefulWidget {
+
+  final Coffee coffee;
+
+  const CoffeeDetailsPage({super.key, required this.coffee});
+
+  @override
+  State<CoffeeDetailsPage> createState() => _CoffeeDetailsPageState();
+}
+
+class _CoffeeDetailsPageState extends State<CoffeeDetailsPage> {
+
+// quantity
+int quantityCount = 0;
+
+// decrement quantity
+void decrementQuantity() {
+  setState(() {
+    quantityCount--;
+  });
+}
+
+// increment quantity
+void incrementQuantity() {
+  setState(() {
+    quantityCount++;
+  });
+}
+
+// add to cart
+void addToCart() {
+
+}
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        foregroundColor: Colors.grey[900],
+      ),
+      body: Column(
+        children: [
+          // listView of coffee details
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              child: ListView(
+                children: [
+                  // image
+                  Image.asset(
+                    widget.coffee.imagePath,
+                    height: 200,
+                  ),
+              
+                  const SizedBox(height: 25),
+              
+                  // rating
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.star,
+                        color: Colors.yellow[800],
+                      ),
+              
+                      const SizedBox(height: 5),
+              
+                      // rating number
+                      Text(
+                        widget.coffee.rating,
+                        style: TextStyle(
+                          color: Colors.grey[600],
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+              
+                  const SizedBox(height: 10),
+              
+                  // food name
+                  Text(
+                    widget.coffee.name,
+                    style: GoogleFonts.lato(
+                      fontSize: 28,
+                    ),
+                  ),
+              
+                  const SizedBox(height: 25.0),
+              
+                  // description
+                  Text("Description", 
+                    style: TextStyle(color: Colors.grey[900], 
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                    ),
+                  ),
+              
+                  const SizedBox(height: 10),
+              
+                  Text(
+                    widget.coffee.description,
+                    style: TextStyle(color: Colors.grey[600],
+                    fontSize: 14,
+                    height: 2,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          // price + quantity + add to cart button
+          Container(
+            color: secondaryColor,
+            padding: const EdgeInsets.all(25),
+            child: Column(
+              children: [
+                // price + quantity
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    // price
+                    Text(
+                      "\$${widget.coffee.price}",
+                      style: const TextStyle(color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                      ),
+                    ),
+
+                    // quantity
+                    Row(
+                      children: [
+                        // minus button
+                        Container(
+                          decoration: BoxDecoration(
+                            color: primaryColor,
+                            shape: BoxShape.circle,
+                          ),
+                          child: IconButton(
+                            onPressed: decrementQuantity, 
+                            icon: const Icon(
+                              Icons.remove,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+
+                        //quantity count
+                        SizedBox(
+                          width: 40,
+                          child: Center(
+                            child: Text(
+                              quantityCount.toString(),
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ),
+                        ),
+
+                        // plus button
+                        Container(
+                          decoration: BoxDecoration(
+                            color: primaryColor,
+                            shape: BoxShape.circle,
+                          ),
+                          child: IconButton(
+                            onPressed: incrementQuantity, 
+                            icon: const Icon(
+                              Icons.add,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 25),
+
+                // add to cart button
+                MyButton(text: "Add To Cart", onTap: addToCart),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

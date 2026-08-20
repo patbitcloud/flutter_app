@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/components/button.dart';
+import 'package:flutter_app/pages/coffee_details_page.dart';
 import 'package:flutter_app/theme/colors.dart';
 import 'package:flutter_app/models/coffee.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,14 +16,62 @@ class MenuPage extends StatefulWidget {
 
 class _MenuPageState extends State<MenuPage> {
 
-  List menuItems = [
-    Coffee (name: 'Latte Macchiato', price: 4.99, imagePath: 'lib/images/latte_macchiato.png', rating: '4.5'),
-    Coffee (name: 'Cappuccino', price: 3.99, imagePath: 'lib/images/cappuccino.png', rating: '4.0'),
-    Coffee (name: 'Espresso', price: 2.99, imagePath: 'lib/images/espresso.png', rating: '4.2'),
-    Coffee (name: 'Iced Coffee', price: 5.49, imagePath: 'lib/images/iced_coffee.png', rating: '4.3'),
-    Coffee (name: 'Black Coffee', price: 4.49, imagePath: 'lib/images/black_coffee.png', rating: '4.1'),
-    Coffee (name: 'Caramel Whipped Coffee', price: 5.99, imagePath: 'lib/images/caramel_whipped_coffee.png', rating: '4.4'),
+  List coffeeMenu = [
+    Coffee (
+      name: 'Latte Macchiato',
+      description: 'A smooth blend of rich espresso layered with velvety steamed milk, topped with a delicate foam for a creamy finish. Perfect for those who enjoy a balanced coffee with a touch of elegance.',
+      price: 4.99, 
+      imagePath: 'lib/images/latte_macchiato.png', 
+      rating: '4.5'
+    ),
+    Coffee (
+      name: 'Cappuccino',
+      description: 'Classic Italian-style coffee with equal parts espresso, steamed milk, and frothy foam. Lightly dusted with cocoa powder, it’s a timeless favorite for coffee lovers who enjoy a bold yet creamy taste.',
+      price: 3.99, 
+      imagePath: 'lib/images/cappuccino.png', 
+      rating: '4.0'
+    ),
+    Coffee (
+      name: 'Espresso',
+      description: 'A concentrated shot of pure coffee intensity, brewed to perfection with a rich crema. Ideal for those who crave a strong, quick boost of energy in a small but powerful cup.',
+      price: 2.99, 
+      imagePath: 'lib/images/espresso.png', 
+      rating: '4.2'
+    ),
+    Coffee (
+      name: 'Iced Coffee',
+      description: 'Refreshing and chilled, this brew combines smooth coffee with ice and a splash of milk. A perfect pick-me-up for hot days, offering a crisp and invigorating flavor.', 
+      price: 5.49, 
+      imagePath: 'lib/images/iced_coffee.png', 
+      rating: '4.3'
+    ),
+    Coffee (
+      name: 'Black Coffee',
+      description: 'Bold and straightforward, this pure coffee delivers a deep, robust flavor without any frills. Best enjoyed by those who appreciate the raw essence of freshly brewed beans.',
+      price: 4.49, 
+      imagePath: 'lib/images/black_coffee.png', 
+      rating: '4.1'
+    ),
+    Coffee (
+      name: 'Caramel Whipped Coffee',
+      description: 'A sweet indulgence featuring rich coffee topped with whipped cream and drizzled caramel. Creamy, decadent, and perfect for satisfying both your caffeine fix and dessert cravings.',
+      price: 5.99, 
+      imagePath: 'lib/images/caramel_whipped_coffee.png', 
+      rating: '4.4'
+    ),
   ];
+
+  // Navigate to coffee item details page
+  void navigateToCoffeeDetails(int index){
+    Navigator.push(
+      context, 
+      MaterialPageRoute(
+        builder: (context) => CoffeeDetailsPage(
+          coffee: coffeeMenu[index],
+        ),
+      ),
+    );
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -33,12 +82,12 @@ class _MenuPageState extends State<MenuPage> {
         elevation: 0,
         leading: Icon(
           Icons.menu,
-          color: primaryColor,
+          color: secondaryColor,
         ),
         title: Text(
           'Menu',
           style: TextStyle(
-            color: primaryColor,
+            color: secondaryColor,
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
@@ -50,7 +99,7 @@ class _MenuPageState extends State<MenuPage> {
           // promo banner
           Container(
             decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 1, 123, 87),
+              color: secondaryColor,
               borderRadius: BorderRadius.circular(20),
             ),
             margin: const EdgeInsets.symmetric(horizontal: 25),
@@ -139,9 +188,12 @@ class _MenuPageState extends State<MenuPage> {
             child: Expanded(
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: menuItems.length,
+                itemCount: coffeeMenu.length,
                 itemBuilder: (context, index) => SizedBox(
-                  child: CoffeeTile(coffee: menuItems[index]),
+                  child: CoffeeTile(
+                    coffee: coffeeMenu[index],
+                    onTap: () => navigateToCoffeeDetails(index),
+                  ),
                 ),
               ),
             ),
