@@ -22,7 +22,9 @@ int quantityCount = 0;
 // decrement quantity
 void decrementQuantity() {
   setState(() {
-    quantityCount--;
+    if(quantityCount > 0) {
+      quantityCount--;
+    }
   });
 }
 
