@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/components/button.dart';
+import 'package:flutter_app/models/shop.dart';
 import 'package:flutter_app/theme/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import '../models/coffee.dart';
 
 class CoffeeDetailsPage extends StatefulWidget {
@@ -37,7 +39,45 @@ void incrementQuantity() {
 
 // add to cart
 void addToCart() {
+  // only add to cart if there is something in the cart
+  if (quantityCount > 0) {
+    // get access to shop
+    final shop = context.read<Shop>();
 
+    // add to cart
+    shop.addToCart(widget.coffee, quantityCount);
+
+    // let the user know it was successfull
+    showDialog(
+      context: context, 
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        backgroundColor: primaryColor,
+        content: const Text(
+          "Successfully Added to cart",
+          style: TextStyle(color: Colors.white),
+          textAlign: TextAlign.center,
+        ),
+        actions: [
+          // okay button
+          IconButton(
+            onPressed: () {
+            // pop once to remove dialog box
+            Navigator.pop(context);
+
+            // pop again to 
+            Navigator.pop(context);
+
+            }, 
+            icon: const Icon(
+              Icons.done,
+              color: Colors.white,
+            ),
+          )
+        ],
+      ),
+    );
+  }
 }
 
   @override

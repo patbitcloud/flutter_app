@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/models/shop.dart';
+import 'package:flutter_app/pages/cart_page.dart';
+import 'package:provider/provider.dart';
 import 'pages/intro_page.dart';
 import 'pages/menu_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => Shop(),
+      child: const MyApp(),
+      ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -17,7 +25,8 @@ class MyApp extends StatelessWidget {
       home: const IntroPage(),
       routes: {
         '/intro': (context) => const IntroPage(),
-        '/menu':(context) => const MenuPage(), // Replace with your MenuPage widget
+        '/menu': (context) => const MenuPage(), // Replace with your MenuPage widget
+        '/cart': (context) => const CartPage(),
       },
     );
   }
